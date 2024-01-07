@@ -12,7 +12,7 @@ import app.views.account as view_account
 
 from flask import Flask, jsonify, redirect, render_template, request, session
 from flask_session import Session
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -122,20 +122,38 @@ def create_app():
                 return apology("must provide password", 403)
 
             # Query database for username
-            rows = db.execute("SELECT * FROM users WHERE username = :username",
-                            {"username": request.form.get("username")}).fetchall()
+            # rows = db.execute("SELECT * FROM users WHERE username = :username",
+            #                 {"username": request.form.get("username")}).fetchall()
+            
+            rows = db.execute(text("SELECT * FROM users WHERE username = :username"),
+                           {"username": request.form.get("username")}).fetchall()
 
+            # result_proxy = db.execute(text("SELECT * FROM users WHERE username = :username"),
+            #               {"username": request.form.get("username")})
+            
+            # print(result_proxy)
+
+            # # Fetch rows as dictionaries
+            # rows = [dict(row) for row in result_proxy]
+
+            print(rows)
+
+
+
+            print(rows)
+            print(rows[0])
+            # print(rows[0]["hash"])
             # Ensure username exists and password is correct
-            if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            if len(rows) != 1 or not check_password_hash(rows[0][2], request.form.get("password")):
                 return apology("invalid username and/or password", 403)
 
             # Remember which user has logged in
-            session["user_id"] = rows[0]["id"]
+            session["user_id"] = rows[0][0]
 
             # Record the login time
             now = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
-            db.execute(
-                "UPDATE users SET lastLogin = :lastLogin WHERE id = :usersID", {"lastLogin": now, "usersID": session["user_id"]})
+            db.execute(text(
+                "UPDATE users SET lastLogin = :lastLogin WHERE id = :usersID"), {"lastLogin": now, "usersID": session["user_id"]})
             db.commit()
 
             # Redirect user to home page
