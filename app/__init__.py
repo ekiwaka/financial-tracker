@@ -20,7 +20,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from flask_wtf.csrf import CSRFProtect
 
-from app.utils.utils import apology, login_required, usd
+from app.utils.utils import apology, login_required, inr
 
 def create_app():
 
@@ -49,7 +49,7 @@ def create_app():
     Session(app)
 
     # Custom filter
-    app.jinja_env.filters["usd"] = usd
+    app.jinja_env.filters["inr"] = inr
     # Enable CSRF protection globally for the Flask app
     csrf = CSRFProtect(app)
 

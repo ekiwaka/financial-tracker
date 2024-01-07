@@ -82,7 +82,7 @@ def getExpense(formData, userID):
     expense["payer"] = formData.get("oldPayer").strip()
     expense["submitTime"] = formData.get("submitTime").strip()
 
-    # Remove dollar sign and comma from the old expense so we can convert to float for the DB
+    # Remove inr sign and comma from the old expense so we can convert to float for the DB
     expense["amount"] = float(
         expense["amount"].replace("$", "").replace(",", ""))
 

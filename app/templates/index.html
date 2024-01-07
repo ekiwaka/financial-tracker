@@ -60,7 +60,7 @@ Home
                         <input type="text" class="form-control-sm" name="amount" id="amount" value="" size="10"
                             placeholder="$" required maxlength="10"
                             pattern="(?=.*?\d)^(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"
-                            title="Format must be currency value without dollar sign or commas e.g. 1, 2.50, 1500.75"
+                            title="Format must be inr value without inr sign or commas e.g. 1, 2.50, 1500.75"
                             form="quickExpense" required>
                     </div>
                 </form>
@@ -91,7 +91,7 @@ Home
                     {% set remainingIncome = (income - expenses_year) %}
                     {% if remainingIncome < 0 %} <h4 class="card-title">$0</h4>
                         {% else %}
-                        <h4 class="card-title">{{ remainingIncome | usd }}</h4>
+                        <h4 class="card-title">{{ remainingIncome | inr }}</h4>
                         {% endif %}
                 </div>
             </div>
@@ -101,7 +101,7 @@ Home
                 <div class="card-header"><strong>{{ date[:4] }} Expenses</strong></div>
                 <div class="card-body">
                     {% if expenses_year != None %}
-                    <h4 class="card-title">{{ expenses_year | usd }}</h4>
+                    <h4 class="card-title">{{ expenses_year | inr }}</h4>
                     {% else %}
                     <p>You have no expenses yet.</p>
                     {% endif %}
@@ -113,7 +113,7 @@ Home
                 <div class="card-header"><strong>Monthly Expenses</strong></div>
                 <div class="card-body">
                     {% if expenses_month != None %}
-                    <h4 class="card-title">{{ expenses_month | usd }}</h4>
+                    <h4 class="card-title">{{ expenses_month | inr }}</h4>
                     {% else %}
                     <p>You have no expenses yet.</p>
                     {% endif %}
@@ -125,7 +125,7 @@ Home
                 <div class="card-header"><strong>Weekly Expenses</strong></div>
                 <div class="card-body">
                     {% if expenses_week != None %}
-                    <h4 class="card-title">{{ expenses_week | usd }}</h4>
+                    <h4 class="card-title">{{ expenses_week | inr }}</h4>
                     {% else %}
                     <p>You have no expenses yet.</p>
                     {% endif %}
@@ -163,7 +163,7 @@ Home
                             <td>{{ expense['category'] }}</td>
                             <td>{{ expense['expensedate'] }}</td>
                             <td>{{ expense['payer'] }}</td>
-                            <td>{{ expense['amount'] | usd }}</td>
+                            <td>{{ expense['amount'] | inr }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -195,7 +195,7 @@ Home
                             }}</a></strong></div>
                 <div class="card-body-dash">
                     {% set percent = ((budget["spent"] / budget["amount"]) * 100) %}
-                    {% set totalBudgetAmount = (budget["amount"] | usd) %}
+                    {% set totalBudgetAmount = (budget["amount"] | inr) %}
                     <p>You've spent {{ percent | round | int }}% of your {{ totalBudgetAmount }} budget</p>
                     <div class="chart-container" style="position: relative; height:17vh">
                         <canvas id="budgetChart.{{ loop.index - 1 }}"></canvas>

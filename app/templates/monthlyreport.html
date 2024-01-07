@@ -64,7 +64,7 @@ Reports | Monthly Spending
             <td>{{ record["category"] }}</td>
             <td>{{ record["expensedate"] }}</td>
             <td>{{ record["payer"] }}</td>
-            <td>{{ record["amount"] | usd}}</td>
+            <td>{{ record["amount"] | inr}}</td>
         </tr>
         {% endfor %}
     </tbody>

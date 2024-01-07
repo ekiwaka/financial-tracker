@@ -36,9 +36,9 @@ def login_required(f):
     return decorated_function
 
 
-def usd(value):
-    """Format value as USD."""
-    return f"${value:,.2f}"
+def inr(value):
+    """Format value as INR."""
+    return f"₹{value:,.2f}"
 
 
 # Converts a list of SQL Alchemy RowProxy objects into a list of dictionary objects with the column name as the key (https://github.com/cs50/python-cs50/blob/develop/src/cs50/sql.py#L328)

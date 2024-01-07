@@ -29,10 +29,10 @@ Update Budget
             oninput="calculateEstimates()">
         <small class="form-text text-muted">Remaining income that is not yet budgeted: <a href=""
                 title="Set budget amount to remaining available income"
-                onclick="fillBudgetAmount({{ remainingBudget }}); return false;">{{ remainingBudget | usd }}</a></small>
+                onclick="fillBudgetAmount({{ remainingBudget }}); return false;">{{ remainingBudget | inr }}</a></small>
         <small class="form-text text-muted"><strong>Amount breakdown:</strong></small>
-        <small class="form-text text-muted" id="weekly">Weekly amount: {{ 0 | usd }}</small>
-        <small class="form-text text-muted" id="monthly">Monthly amount: {{ 0 | usd }}</small>
+        <small class="form-text text-muted" id="weekly">Weekly amount: {{ 0 | inr }}</small>
+        <small class="form-text text-muted" id="monthly">Monthly amount: {{ 0 | inr }}</small>
     </div>
     <div class="form-group">
         <label class="formLabels budgetsCategoriesLabel">Spending Categories</label>

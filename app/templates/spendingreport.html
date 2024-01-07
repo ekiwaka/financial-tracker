@@ -68,10 +68,10 @@ Reports | Spending Categories Report
                 {% if expense["amount"] == 0 %}
                 <td>-</td>
                 {% else %}
-                <td>{{ expense["amount"] | usd }}</td>
+                <td>{{ expense["amount"] | inr }}</td>
                 {% endif %}
                 {% endfor %}
-                <td>{{ expenses | sum(attribute='amount') | usd }}</td>
+                <td>{{ expenses | sum(attribute='amount') | inr }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -79,9 +79,9 @@ Reports | Spending Categories Report
             <tr>
                 <td></td>
                 {% for category in categories %}
-                <td>{{ category["amount"] | usd }}</td>
+                <td>{{ category["amount"] | inr }}</td>
                 {% endfor %}
-                <td>{{ categories | sum(attribute='amount') | usd }}</td>
+                <td>{{ categories | sum(attribute='amount') | inr }}</td>
             </tr>
         </tfoot>
     </table>

@@ -41,7 +41,7 @@ Reports | Payers Spending
             {% for payer in payers %}
             <tr>
                 <td>{{ payer["name"] }}</td>
-                <td>{{ payer["amount"] | usd }}</td>
+                <td>{{ payer["amount"] | inr }}</td>
                 <td>{{ payer["percentAmount"] }}%</td>
             </tr>
             {% endfor %}
@@ -49,7 +49,7 @@ Reports | Payers Spending
         <tfoot>
             <tr>
                 <th>Total</th>
-                <th>{{ payers | sum(attribute="amount") | usd }}</th>
+                <th>{{ payers | sum(attribute="amount") | inr }}</th>
                 <th>{{ payers | sum(attribute="percentAmount")}}%</th>
             </tr>
         </tfoot>

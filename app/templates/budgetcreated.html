@@ -19,7 +19,7 @@ Budget Created
         <h5 class="card-title">Budget Details</h5>
         <p><strong>Name</strong>: {{ results["name"] }}</p>
         <p><strong>Year</strong>: {{ results["year"] }}</p>
-        <p><strong>Amount</strong>: {{ results["amount"] | usd }}</p>
+        <p><strong>Amount</strong>: {{ results["amount"] | inr }}</p>
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
@@ -35,13 +35,13 @@ Budget Created
               <tr>
                 <td>{{ category["name"] }}</td>
                 <td>{{ (category['percent'] * 100) | round | int }}%</td>
-                <td>{{ amount | usd }}
+                <td>{{ amount | inr }}
               </tr>
               {% endfor %}
               <tr>
                 <td></td>
                 <td>100%</td>
-                <td>{{ results["amount"] | usd }}</td>
+                <td>{{ results["amount"] | inr }}</td>
               </tr>
             </tbody>
           </table>

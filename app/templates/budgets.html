@@ -25,7 +25,7 @@ Manage Budgets
       <div class="card-body">
         <h5 class="card-title">Create a new budget</h5>
         {% if (income - budgeted) > 0 %}
-        <p>You currently have <strong>{{ (income - budgeted) | usd}}</strong> of unbudgeted income.</p>
+        <p>You currently have <strong>{{ (income - budgeted) | inr}}</strong> of unbudgeted income.</p>
         <a href="/createbudget" class="btn btn-success">Create a Budget</a>
         {% else %}
         <p>All of your income is budgeted for. Good job 👍</p>
@@ -50,10 +50,10 @@ Manage Budgets
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal"
               data-budget="{{ budget['name'] }}" data-year="{{ budget['year'] }}"
-              data-amount="{{ budget['amount'] | usd }}">Delete</a>
+              data-amount="{{ budget['amount'] | inr }}">Delete</a>
           </div>
         </div>
-        <small class="form-text text-muted">Amount: {{ budget["amount"] | usd }}</a></small>
+        <small class="form-text text-muted">Amount: {{ budget["amount"] | inr }}</a></small>
         <br>
         {% endfor %}
         {% else %}

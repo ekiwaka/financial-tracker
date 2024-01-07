@@ -45,7 +45,7 @@ Reports | Budgets Overview
                             }}</a></strong></div>
                 <div class="card-body-dash">
                     {% set percent = ((budget["spent"] / budget["amount"]) * 100) %}
-                    {% set totalBudgetAmount = (budget["amount"] | usd) %}
+                    {% set totalBudgetAmount = (budget["amount"] | inr) %}
                     {% set totalBudgetAmount = totalBudgetAmount[:-3] %}
                     <p>You've spent {{ percent | round | int }}% of your {{ totalBudgetAmount }} budget</p>
                     <div class="chart-container" style="position: relative; height:23vh">
@@ -76,7 +76,7 @@ Reports | Budgets Overview
                         <td>{{ expense["category"] }}</td>
                         <td>{{ expense["expensedate"] }}</td>
                         <td>{{ expense["payer"] }}</td>
-                        <td>{{ expense["amount"] | usd}}</td>
+                        <td>{{ expense["amount"] | inr}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

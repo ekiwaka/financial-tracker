@@ -10,7 +10,7 @@
     {% if newIncome != None %}
       <div class="alert alert-dismissible alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success!</strong> You updated your income to <strong>{{ newIncome | usd }}</strong>.
+        <strong>Success!</strong> You updated your income to <strong>{{ newIncome | inr }}</strong>.
       </div>
     {% elif addPayer != None %}
       <div class="alert alert-dismissible alert-success">
@@ -38,7 +38,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Income</h5>
-            <p>Your income is <strong>{{ income | usd }}</strong>.</p>
+            <p>Your income is <strong>{{ income | inr }}</strong>.</p>
             <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseIncome" role="button" aria-expanded="false" aria-controls="collapseIncome">Update Income</a></p>
           </div>
           <div class="collapse" id="collapseIncome">
@@ -46,7 +46,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="form-group">
                     <label class="col-form-label col-form-label-sm" for="income">Income Amount</label>
-                    <input class="form-control form-control-sm" type="text" name="income" id="income" form='updateIncome' size="10" placeholder="$" maxlength="10" pattern="(?=.*?\d)^(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$" title="Format must be currency value without dollar sign or commas e.g. 1, 2.50, 1500.75" required>
+                    <input class="form-control form-control-sm" type="text" name="income" id="income" form='updateIncome' size="10" placeholder="$" maxlength="10" pattern="(?=.*?\d)^(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$" title="Format must be inr value without inr sign or commas e.g. 1, 2.50, 1500.75" required>
                 </div>
                 <p><button type="submit" id="btnUpdateIncome" name="btnUpdateIncome" class="btn btn-success">Save Income</button></p>
               </form>
