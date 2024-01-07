@@ -314,7 +314,7 @@ def create_app():
                 request.form, session["user_id"])
 
             # Make sure an existing record was found otherwise render an error message
-            if oldExpense["id"] == None:
+            if oldExpense["id"] is None:
                 return apology("The expense record you're trying to update doesn't exist")
 
             # Delete the existing expense record

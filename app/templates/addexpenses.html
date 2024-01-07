@@ -70,9 +70,9 @@
 
     <script src="/static/js/addexpenses.js"></script>
     <script>
-      var categoryData = JSON.stringify({{ categories | tojson }});
+      var categoryData = JSON.stringify('{{ categories | tojson | safe }}');
       var dateData = "{{ date }}";
-      var payersData = JSON.stringify({{ payers | tojson }});
+      var payersData = JSON.stringify('{{ payers | tojson | safe }}');
 
       loadData(categoryData, dateData, payersData);
     </script>

@@ -101,7 +101,7 @@ Reports | Monthly Spending
 {% if monthlySpending %}
 <script src="/static/js/reports.js"></script>
 <script>
-    var monthlyData = JSON.stringify({{ monthlySpending | tojson }});
+    var monthlyData = JSON.stringify('{{ monthlySpending | tojson | safe }}');
     loadMonthlySpendingData(monthlyData);
 </script>
 {% endif %}

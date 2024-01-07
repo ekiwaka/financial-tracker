@@ -323,35 +323,35 @@ Home
 
 {% if budgets %}
 <script>
-    var budgetData = JSON.stringify({{ budgets | tojson }});
+    var budgetData = JSON.stringify('{{ budgets | tojson | safe }}');
     loadBudgetData(budgetData);
 </script>
 {% endif %}
 
 {% if spending_week %}
 <script>
-    var weeklyData = JSON.stringify({{ spending_week | tojson }});
+    var weeklyData = JSON.stringify('{{ spending_week | tojson | safe }}');
     loadWeeklySpendingData(weeklyData);
 </script>
 {% endif %}
 
 {% if spending_month %}
 <script>
-    var monthlyData = JSON.stringify({{ spending_month | tojson }});
+    var monthlyData = JSON.stringify('{{ spending_month | tojson | safe }}');
     loadMonthlySpendingData(monthlyData);
 </script>
 {% endif %}
 
 {% if spending_trends %}
 <script>
-    var trendsData = JSON.stringify({{ spending_trends | tojson }});
+    var trendsData = JSON.stringify('{{ spending_trends | tojson | safe }}');
     loadTrendsData(trendsData);
 </script>
 {% endif %}
 
 {% if payersChart %}
 <script>
-    var payersData = JSON.stringify({{ payersChart | tojson }});
+    var payersData = JSON.stringify('{{ payersChart | tojson | safe }}');
     loadPayersData(payersData);
 </script>
 {% endif %}

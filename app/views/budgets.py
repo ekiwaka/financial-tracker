@@ -238,7 +238,7 @@ def getBudgetID(budgetName, userID):
 
 # Get and return a bool based on whether or not a new/updated budget name already exists for the user
 def isUniqueBudgetName(budgetName, budgetID, userID):
-    if budgetID == None:
+    if budgetID is None:
         # Verify the net-new created budget name is not already existing in the users existing budgets
         results = db.execute(
             "SELECT name FROM budgets WHERE user_id = :usersID", {"usersID": userID}).fetchall()

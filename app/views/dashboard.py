@@ -84,7 +84,7 @@ def getBudgets(userID, year=None):
                 {"usersID": userID, "year": year, "budgetID": budgetID}).fetchall()
             budget_TotalSpent = convertSQLToDict(results)
 
-            if (budget_TotalSpent[0]["spent"] == None):
+            if (budget_TotalSpent[0]["spent"] is None):
                 budget["spent"] = 0
             else:
                 budget["spent"] = budget_TotalSpent[0]["spent"]
@@ -130,7 +130,7 @@ def getWeeklySpending(weekNames, userID):
         weekSpending = convertSQLToDict(results)
 
         # Set the amount to 0 if there are no expenses for a given week
-        if weekSpending[0]["amount"] == None:
+        if weekSpending[0]["amount"] is None:
             week["amount"] = 0
         else:
             week["amount"] = weekSpending[0]["amount"]

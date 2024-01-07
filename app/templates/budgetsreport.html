@@ -92,7 +92,7 @@ Reports | Budgets Overview
 
 <script src="/static/js/reports.js"></script>
 <script>
-    var budgetData = JSON.stringify({{ budgets | tojson }});
+    var budgetData = JSON.stringify('{{ budgets | tojson | safe }}');
     loadBudgetData(budgetData);
 </script>
 

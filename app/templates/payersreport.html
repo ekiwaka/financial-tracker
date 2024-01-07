@@ -58,7 +58,7 @@ Reports | Payers Spending
 
 <script src="/static/js/reports.js"></script>
 <script>
-    var payersData = JSON.stringify({{ payers | tojson }});
+    var payersData = JSON.stringify('{{ payers | tojson | safe }}');
     loadPayersData(payersData);
 </script>
 {% else %}
