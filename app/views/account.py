@@ -5,7 +5,7 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.utils.utils import convertSQLToDict
+from app.utils.utils import transformDataType
 
 # Create engine object to manage connections to DB, and scoped session to separate user interactions with DB
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -46,7 +46,7 @@ def getPayers(userID):
     results = db.execute(
         "SELECT name FROM payers WHERE user_id = :usersID ORDER BY name ASC", {"usersID": userID}).fetchall()
 
-    payers = convertSQLToDict(results)
+    payers = transformDataType(results)
 
     return payers
 

@@ -10,7 +10,7 @@ from flask import request, session
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from app.utils.utils import convertSQLToDict
+from app.utils.utils import transformDataType
 from datetime import datetime
 
 # Create engine object to manage connections to DB, and scoped session to separate user interactions with DB
@@ -37,7 +37,7 @@ def generateBudgetsReport(userID, year=None):
             budgetID = view_budgets.getBudgetID(record["name"], userID)
             results = db.execute("SELECT expenses.description, expenses.category, expenses.expenseDate, expenses.payer, expenses.amount FROM expenses WHERE user_id = :usersID AND date_part('year', date(expensedate)) = :year AND category IN (SELECT categories.name FROM budgetcategories INNER JOIN categories on budgetcategories.category_id = categories.id WHERE budgetcategories.budgets_id = :budgetID)",
                                  {"usersID": userID, "year": year, "budgetID": budgetID}).fetchall()
-            expenseDetails = convertSQLToDict(results)
+            expenseDetails = transformDataType(results)
             record["expenses"] = expenseDetails
 
     return budgetsReport
@@ -56,7 +56,7 @@ def generateMonthlyReport(userID, year=None):
     # Get the spending data from DB for the table (individual expenses per month)
     results = db.execute(
         "SELECT description, category, expensedate, amount, payer FROM expenses WHERE user_id = :usersID AND date_part('year', date(expensedate)) = :year ORDER BY id ASC", {"usersID": userID, "year": year}).fetchall()
-    spending_month_table = convertSQLToDict(results)
+    spending_month_table = transformDataType(results)
 
     # Combine both data points (chart and table) into a single data structure
     monthlyReport = {"chart": spending_month_chart,
@@ -118,7 +118,7 @@ def generateSpendingTrendsReport(userID, year=None):
         "SELECT date_part('month', date(expensedate)) AS monthofcategoryexpense, category AS name, COUNT(category) AS count, SUM(amount) AS amount FROM expenses WHERE user_id = :usersID AND date_part('year', date(expensedate)) = :year GROUP BY date_part('month', date(expensedate)), category ORDER BY COUNT(category) DESC",
         {"usersID": userID, "year": year}).fetchall()
 
-    spending_trends_table_query = convertSQLToDict(results)
+    spending_trends_table_query = transformDataType(results)
 
     # Loop thru each monthly category expense from above DB query and update the data structure that holds all monthly category expenses
     for categoryExpense in spending_trends_table_query:
@@ -162,12 +162,12 @@ def generatePayersReport(userID, year=None):
     # First get all of the payers from expenses table (this may include payers that don't exist anymore for the user (i.e. deleted the payer and didn't update expense records))
     results_payers = db.execute(
         "SELECT payer AS name, SUM(amount) AS amount FROM expenses WHERE user_id = :usersID AND date_part('year', date(expensedate)) = :year GROUP BY payer ORDER BY amount DESC", {"usersID": userID, "year": year}).fetchall()
-    payers = convertSQLToDict(results_payers)
+    payers = transformDataType(results_payers)
 
     # Now get any payers the user has in their account but haven't expensed anything
     results_nonExpensePayers = db.execute(
         "SELECT name FROM payers WHERE user_id = :usersID AND name NOT IN (SELECT payer FROM expenses WHERE expenses.user_id = :usersID AND date_part('year', date(expensedate)) = :year)", {"usersID": userID, "year": year}).fetchall()
-    nonExpensePayers = convertSQLToDict(results_nonExpensePayers)
+    nonExpensePayers = transformDataType(results_nonExpensePayers)
 
     # Add the non-expense payers to the payers data structure and set their amounts to 0
     for payer in nonExpensePayers:

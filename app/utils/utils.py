@@ -43,7 +43,7 @@ def inr(value):
 
 # Converts a list of SQL Alchemy RowProxy objects into a list of dictionary objects with the column name as the key (https://github.com/cs50/python-cs50/blob/develop/src/cs50/sql.py#L328)
 # Used for SQL SELECT .fetchall() results
-def convertSQLToDict(listOfRowProxy):
+def transformDataType(listOfRowProxy):
     # Coerce types
     rows = [dict(row) for row in listOfRowProxy]
     for row in rows:

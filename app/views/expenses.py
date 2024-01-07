@@ -6,7 +6,7 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from datetime import datetime
-from app.utils.utils import convertSQLToDict
+from app.utils.utils import transformDataType
 
 # Create engine object to manage connections to DB, and scoped session to separate user interactions with DB
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -66,7 +66,7 @@ def getHistory(userID):
     results = db.execute("SELECT description, category, expenseDate AS date, payer, amount, submitTime FROM expenses WHERE user_id = :usersID ORDER BY id ASC",
                          {"usersID": userID}).fetchall()
 
-    history = convertSQLToDict(results)
+    history = transformDataType(results)
 
     return history
 

@@ -4,7 +4,7 @@ from flask import request, session
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from app.utils.utils import convertSQLToDict
+from app.utils.utils import transformDataType
 
 # Create engine object to manage connections to DB, and scoped session to separate user interactions with DB
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -17,7 +17,7 @@ def getSpendCategories(userID):
         "SELECT categories.name FROM usercategories INNER JOIN categories ON usercategories.category_id = categories.id WHERE usercategories.user_id = :usersID",
         {"usersID": userID}).fetchall()
 
-    categories = convertSQLToDict(results)
+    categories = transformDataType(results)
 
     return categories
 
@@ -28,7 +28,7 @@ def getSpendCategories_Inactive(userID):
         "SELECT category FROM expenses WHERE user_id = :usersID AND category NOT IN(SELECT categories.name FROM usercategories INNER JOIN categories ON categories.id = usercategories.category_id WHERE user_id = :usersID) GROUP BY category",
         {"usersID": userID}).fetchall()
 
-    categories = convertSQLToDict(results)
+    categories = transformDataType(results)
 
     return categories
 
@@ -37,7 +37,7 @@ def getSpendCategories_Inactive(userID):
 # def getSpendCategoryLibrary():
 #     results = db.execute("SELECT id, name FROM categories").fetchall()
 
-#     convertSQLToDict(results)
+#     transformDataType(results)
 
 #     return categories
 
@@ -55,7 +55,7 @@ def getBudgetsSpendCategories(userID):
     results = db.execute("SELECT budgets.name AS budgetname, categories.id AS categoryid, categories.name AS categoryname FROM budgetcategories INNER JOIN budgets on budgetcategories.budgets_id = budgets.id INNER JOIN categories on budgetcategories.category_id = categories.id WHERE budgets.user_id = :usersID ORDER BY budgets.name, categories.name",
                          {"usersID": userID}).fetchall()
 
-    budgetsWithCategories = convertSQLToDict(results)
+    budgetsWithCategories = transformDataType(results)
 
     return budgetsWithCategories
 
@@ -65,7 +65,7 @@ def getBudgetsFromSpendCategory(categoryID, userID):
     results = db.execute("SELECT budgets.id AS budgetid, budgets.name AS budgetname, categories.id AS categoryid, categories.name AS categoryname FROM budgetcategories INNER JOIN budgets on budgetcategories.budgets_id = budgets.id INNER JOIN categories on budgetcategories.category_id = categories.id WHERE budgets.user_id = :usersID AND budgetcategories.category_id = :categoryID ORDER BY budgets.name, categories.name", {
         "usersID": userID, "categoryID": categoryID}).fetchall()
 
-    budgets = convertSQLToDict(results)
+    budgets = transformDataType(results)
 
     return budgets
 

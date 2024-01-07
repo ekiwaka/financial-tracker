@@ -7,7 +7,7 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from datetime import datetime
-from app.utils.utils import convertSQLToDict
+from app.utils.utils import transformDataType
 
 # Create engine object to manage connections to DB, and scoped session to separate user interactions with DB
 engine = create_engine(os.getenv("DATABASE_URL"))
@@ -19,7 +19,7 @@ def getBudgets(userID):
     results = db.execute(
         "SELECT id, name, year, amount FROM budgets WHERE user_id = :usersID ORDER BY name ASC", {"usersID": userID}).fetchall()
 
-    budgets_query = convertSQLToDict(results)
+    budgets_query = transformDataType(results)
 
     if budgets_query:
         # Create a dict with budget year as key and empty list as value which will store all budgets for that year
@@ -40,7 +40,7 @@ def getBudgetByID(budgetID, userID):
     results = db.execute(
         "SELECT name, amount, year, id FROM budgets WHERE user_id = :usersID AND id = :budgetID", {"usersID": userID, "budgetID": budgetID}).fetchall()
 
-    budget = convertSQLToDict(results)
+    budget = transformDataType(results)
 
     return budget[0]
 
@@ -242,12 +242,12 @@ def isUniqueBudgetName(budgetName, budgetID, userID):
         # Verify the net-new created budget name is not already existing in the users existing budgets
         results = db.execute(
             "SELECT name FROM budgets WHERE user_id = :usersID", {"usersID": userID}).fetchall()
-        existingBudgets = convertSQLToDict(results)
+        existingBudgets = transformDataType(results)
     else:
         # Verify the updated budget name is not already existing in the users existing budgets
         results = db.execute(
             "SELECT name FROM budgets WHERE user_id = :usersID AND NOT id = :oldBudgetID", {"usersID": userID, "oldBudgetID": budgetID}).fetchall()
-        existingBudgets = convertSQLToDict(results)
+        existingBudgets = transformDataType(results)
 
     # Loop through all budgets and compare names
     isUniqueName = True
@@ -271,7 +271,7 @@ def getUpdatableBudget(budget, userID):
     # Get the budget's spend categories and % amount for each category
     results = db.execute("SELECT DISTINCT categories.name, budgetCategories.amount FROM budgetCategories INNER JOIN categories ON budgetCategories.category_id = categories.id INNER JOIN budgets ON budgetCategories.budgets_id = budgets.id WHERE budgets.id = :budgetsID",
                          {"budgetsID": budget["id"]}).fetchall()
-    budgetCategories = convertSQLToDict(results)
+    budgetCategories = transformDataType(results)
 
     # Add 'categories' as a new key/value pair to the existing budget dict
     budget["categories"] = []
