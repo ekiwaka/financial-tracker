@@ -129,6 +129,7 @@ env.bak/
 venv.bak/
 flask_session/
 newenv/
+env-upgrade/
 
 # Spyder project settings
 .spyderproject
