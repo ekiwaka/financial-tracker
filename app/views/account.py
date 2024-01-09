@@ -15,7 +15,7 @@ db = scoped_session(sessionmaker(bind=engine))
 # Get the users account name
 def getUsername(userID):
     name = db.execute(
-        "SELECT username FROM users WHERE id = :usersID", {"usersID": userID}).fetchone()[0] 
+        "SELECT username FROM users WHERE id = :usersID", {"usersID": userID}).fetchone()[0]
 
     return name
 
